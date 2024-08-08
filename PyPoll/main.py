@@ -30,35 +30,37 @@ with open(election_csv) as csvfile:
 max_percentage = 0
 winner = ""
 
+# Prepare the output text
+output_text = (
+    'Election Results\n'
+    '----------------------------\n'
+    f'Total Votes: {numrows}\n'
+    '----------------------------\n'
+)
 
 # Calculate percentages and find the winner
 for candidate, count in candidates.items():
     percentage = (count / numrows) * 100
-    print(f'{candidate}: {percentage:.3f}% ({count} votes)')
+    output_text += f'{candidate}: {percentage:.3f}% ({count} votes)\n'
     
     # Check if this candidate has the highest percentage
     if percentage > max_percentage:
         max_percentage = percentage
         winner = candidate
 
-# Prepare the output text
-output_text = (
-        'Election Results\n'
-        '----------------------------\n'
-        f'Total Votes: {numrows}\n'
-        '----------------------------\n'
-        f'{candidate}: {percentage:.3f}% ({count} votes)\n'
-        '----------------------------\n'
-        f'Winner: {winner}\n'
-        '----------------------------\n'
+# Append the winner to the output text
+output_text += (
+    '----------------------------\n'
+    f'Winner: {winner}\n'
+    '----------------------------\n'
 )
 
 # Define the output file path in the parent directory
 output_file_path = os.path.join('Analysis', 'analysis.txt')
-    
-    # Write the output to the text file
+
+# Write the output to the text file
 with open(output_file_path, 'w') as output_file:
     output_file.write(output_text)
 
-    # print the output to the console as well
-    print(output_text)
+# Print the output to the console as well
+print(output_text)
